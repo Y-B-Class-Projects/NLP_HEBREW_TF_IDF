@@ -86,6 +86,7 @@ def create_cosine_distances_matrix(query_str, docs_files):
     print(tabulate(cosine_distances[:10], headers=['file', 'cosine distances'], tablefmt='fancy_grid'))
     return cosine_distances
 
+
 def my_unzip(docs_list):
     index = 0
     with ZipFile('Clean_Punctuation.zip', 'r') as zipObj:
@@ -110,13 +111,12 @@ def main():
     cosine_distances_matrixs = []
 
     for folder in folders:
-        docs_files = [folder+file for file in os.listdir(folder) if file.endswith(".txt")]
+        docs_files = [folder + file for file in os.listdir(folder) if file.endswith(".txt")]
         _matrix = create_cosine_distances_matrix(query_str, docs_files)
         cosine_distances_matrixs.append(["TF-IDF, " + folder, _matrix])
 
-
-
     print()
+
 
 if __name__ == '__main__':
     # my_unzip(my_csv())
