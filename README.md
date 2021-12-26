@@ -32,28 +32,28 @@ The contents of the files can be viewed by clicking on them
 
 | file | cosine distances |
 | ------------- | ------------- |
-| [2763273prefsuf.txt](docs/Clean_Punctuation/2763273prefsuf.txt)|0.8557371862932684|
-| [3231307prefsuf.txt](docs/Clean_Punctuation/3231307prefsuf.txt)|0.8607839814331686|
-| [3191423prefsuf.txt](docs/Clean_Punctuation/3191423prefsuf.txt)|0.8615751927783771|
-| [2789433prefsuf.txt](docs/Clean_Punctuation/2789433prefsuf.txt)|0.8673518987533998|
-| [1818664prefsuf.txt](docs/Clean_Punctuation/1818664prefsuf.txt)|0.869321965177581|
-| [3200181prefsuf.txt](docs/Clean_Punctuation/3200181prefsuf.txt)|0.8731358533354855|
-| [2942877prefsuf.txt](docs/Clean_Punctuation/2942877prefsuf.txt)|0.876800170732896|
-| [2594594prefsuf.txt](docs/Clean_Punctuation/2594594prefsuf.txt)|0.8788144348552696|
-| [2578065prefsuf.txt](docs/Clean_Punctuation/2578065prefsuf.txt)|0.880982998007856|
-| [2777669prefsuf.txt](docs/Clean_Punctuation/2777669prefsuf.txt)|0.8833262914654372|
+| [2763273prefsuf.txt](docs/Clean_Punctuation/2763273.txt)|0.8557371862932684|
+| [3231307prefsuf.txt](docs/Clean_Punctuation/3231307.txt)|0.8607839814331686|
+| [3191423prefsuf.txt](docs/Clean_Punctuation/3191423.txt)|0.8615751927783771|
+| [2789433prefsuf.txt](docs/Clean_Punctuation/2789433.txt)|0.8673518987533998|
+| [1818664prefsuf.txt](docs/Clean_Punctuation/1818664.txt)|0.869321965177581|
+| [3200181prefsuf.txt](docs/Clean_Punctuation/3200181.txt)|0.8731358533354855|
+| [2942877prefsuf.txt](docs/Clean_Punctuation/2942877.txt)|0.876800170732896|
+| [2594594prefsuf.txt](docs/Clean_Punctuation/2594594.txt)|0.8788144348552696|
+| [2578065prefsuf.txt](docs/Clean_Punctuation/2578065.txt)|0.880982998007856|
+| [2777669prefsuf.txt](docs/Clean_Punctuation/2777669.txt)|0.8833262914654372|
 
 ### RootWord TF-IDF:
 
 | file | cosine distances |
 | ------------- | ------------- |
-| [3224668root.txt](docs/Clean_Punctuation/3224668root.txt)|0.6067015957773455|
-| [2763273root.txt](docs/Clean_Punctuation/2763273root.txt)|0.6188821790762603|
-| [2578065root.txt](docs/Clean_Punctuation/2578065root.txt)|0.6318448601030151|
-| [1818664root.txt](docs/Clean_Punctuation/1818664root.txt)|0.6449171204616369|
-| [3044679root.txt](docs/Clean_Punctuation/3044679root.txt)|0.6585360629138286|
-| [2777669root.txt](docs/Clean_Punctuation/2777669root.txt)|0.6593998011996607|
-| [2765958root.txt](docs/Clean_Punctuation/2765958root.txt)|0.6702292160688728|
-| [1592317root.txt](docs/Clean_Punctuation/1592317root.txt)|0.6779143197256595|
-| [2594594root.txt](docs/Clean_Punctuation/2594594root.txt)|0.6780379139685844|
-| [2789433root.txt](docs/Clean_Punctuation/2789433root.txt)|0.6793616819070012|
+| [3224668root.txt](docs/Clean_Punctuation/3224668.txt)|0.6067015957773455|
+| [2763273root.txt](docs/Clean_Punctuation/2763273.txt)|0.6188821790762603|
+| [2578065root.txt](docs/Clean_Punctuation/2578065.txt)|0.6318448601030151|
+| [1818664root.txt](docs/Clean_Punctuation/1818664.txt)|0.6449171204616369|
+| [3044679root.txt](docs/Clean_Punctuation/3044679.txt)|0.6585360629138286|
+| [2777669root.txt](docs/Clean_Punctuation/2777669.txt)|0.6593998011996607|
+| [2765958root.txt](docs/Clean_Punctuation/2765958.txt)|0.6702292160688728|
+| [1592317root.txt](docs/Clean_Punctuation/1592317.txt)|0.6779143197256595|
+| [2594594root.txt](docs/Clean_Punctuation/2594594.txt)|0.6780379139685844|
+| [2789433root.txt](docs/Clean_Punctuation/2789433.txt)|0.6793616819070012|
