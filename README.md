@@ -11,6 +11,8 @@ TF-IDF and vod2vec on 3 types of files in Hebrew.
 Below are the results for the query
 `חמאס מלחמה עזה טיל טילים פלסטיני`
 
+The contents of the files can be viewed by clicking on them
+
 ### clean punctuation TF-IDF:
 
 | file | cosine distances |
