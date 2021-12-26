@@ -1,15 +1,13 @@
 import collections
 import datetime
-
-import util
+from zipfile import ZipFile
 from tabulate import tabulate
 import os
 from collections import Counter
 import numpy as np
-from scipy import spatial
 from tqdm import tqdm
-import textwrap
 import pickle
+import pandas as pd
 
 
 def make_dictionary(file):
@@ -119,8 +117,27 @@ def main():
     print(tabulate(jaccard_distances[:10], headers=['file', 'euclidean distances'], tablefmt='fancy_grid'))
 
 
+def my_unzip(docs_list):
+    index = 0
+    with ZipFile('Clean_Punctuation.zip', 'r') as zipObj:
+        listOfFileNames = ["Clean_Punctuation/" + str(n) + ".txt" for n in docs_list]
+        for fileName in listOfFileNames:
+            zipObj.extract(fileName, 'docs')
+            index += 1
+
+
+def my_csv():
+    pd.options.display.max_rows = 102
+    df = pd.read_csv('data.csv', names=["doc", "type"])
+    my_docs = df["doc"].tolist()
+    my_docs.sort()
+    # print(len(my_docs))
+    return my_docs
+
+
 if __name__ == '__main__':
+    # my_unzip(my_csv())
     tic = datetime.datetime.now()
-    main()
+    # main()
     toc = datetime.datetime.now()
     print('\n' + str((toc - tic)))
