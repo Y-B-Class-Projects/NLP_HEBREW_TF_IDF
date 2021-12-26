@@ -8,6 +8,7 @@ import numpy as np
 from tqdm import tqdm
 import pickle
 import pandas as pd
+from scipy.spatial import distance
 
 
 def make_dictionary(file):
@@ -54,68 +55,36 @@ def jaccard_similarity(list1, list2):
     return float(intersection) / union
 
 
-def main():
-    query_str = "קרונה COVID חיסונים מחלימים חיסון שלישי בוסטר מתחסנים הקורונה מחלה בדיקות סגר חולים"
-    docs_files = ['data\\' + file for file in os.listdir('data') if file.endswith(".txt")]
-    all_files = docs_files
-
+def create_cosine_distances_matrix(query_str, docs_files):
     files_words = {}
     all_words = query_str.split()
-    for file in tqdm(all_files):
+    for file in tqdm(docs_files):
         files_words[file] = make_dictionary(file)
         all_words += make_dictionary(file)
     files_words["Query"] = query_str.split()
     all_words = Counter(all_words).most_common()
 
-    with open('1.pkl', 'wb') as f:
-        pickle.dump(query_str, f)
-        pickle.dump(all_files, f)
-        pickle.dump(files_words, f)
-        pickle.dump(all_words, f)
-
     all_words_temp = []
     for word in tqdm(all_words):
-        if word[1] > 111 and len(word[0]) > 1 and word[0] not in util.get_stop_words():
+        if word[1] > 100 and len(word[0]) > 1:
             all_words_temp += [word[0]]
     all_words = all_words_temp
-
-    with open('2.pkl', 'wb') as f:
-        pickle.dump(all_words_temp, f)
 
     avdl = np.average([len(bow) for bow in list(files_words.values())])
     IDF = calculate_IDF(all_words, list(files_words.values()))
 
-    with open('3.pkl', 'wb') as f:
-        pickle.dump(avdl, f)
-        pickle.dump(IDF, f)
-
     cosine_distances = []
-    euclidean_distances = []
-    jaccard_distances = []
     query_TF_IDF = calculate_TF_IDF(all_words, calculateTF(all_words, list(files_words.get("Query")), avdl), IDF)
     for file in tqdm(files_words):
         if file != "Query":
             doc_TF_IDF = calculate_TF_IDF(all_words, calculateTF(all_words, files_words[file], avdl), IDF)
-            cosine_distances.append([file, spatial.distance.cosine(query_TF_IDF, doc_TF_IDF)])
-            euclidean_distances.append([file, spatial.distance.euclidean(query_TF_IDF, doc_TF_IDF)])
-            jaccard_distances.append([file, jaccard_similarity(query_TF_IDF, doc_TF_IDF)])
+            cosine_distances.append([file, distance.cosine(query_TF_IDF, doc_TF_IDF)])
 
     cosine_distances = sorted(cosine_distances, key=lambda x: x[1])
     cosine_distances = [it for it in cosine_distances if it[1] != 0]
-    euclidean_distances = sorted(euclidean_distances, key=lambda x: x[1])
-    euclidean_distances = [it for it in euclidean_distances if it[1] != 0]
-    jaccard_distances = sorted(jaccard_distances, key=lambda x: x[1])
-    jaccard_distances = [it for it in jaccard_distances if it[1] != 0]
-
-    with open('4.pkl', 'wb') as f:
-        pickle.dump(cosine_distances, f)
-        pickle.dump(euclidean_distances, f)
-        pickle.dump(jaccard_distances, f)
 
     print(tabulate(cosine_distances[:10], headers=['file', 'cosine distances'], tablefmt='fancy_grid'))
-    print(tabulate(euclidean_distances[:10], headers=['file', 'euclidean distances'], tablefmt='fancy_grid'))
-    print(tabulate(jaccard_distances[:10], headers=['file', 'euclidean distances'], tablefmt='fancy_grid'))
-
+    return cosine_distances
 
 def my_unzip(docs_list):
     index = 0
@@ -131,13 +100,27 @@ def my_csv():
     df = pd.read_csv('data.csv', names=["doc", "type"])
     my_docs = df["doc"].tolist()
     my_docs.sort()
-    # print(len(my_docs))
     return my_docs
 
+
+def main():
+    folders = ['docs\\Clean_Punctuation\\', 'docs\\prefSufWord\\', 'docs\\rootWord\\']
+    query_str = "חמאס מלחמה עזה טיל טילים פלסטינים"
+
+    cosine_distances_matrixs = []
+
+    for folder in folders:
+        docs_files = [folder+file for file in os.listdir(folder) if file.endswith(".txt")]
+        _matrix = create_cosine_distances_matrix(query_str, docs_files)
+        cosine_distances_matrixs.append(["TF-IDF, " + folder, _matrix])
+
+
+
+    print()
 
 if __name__ == '__main__':
     # my_unzip(my_csv())
     tic = datetime.datetime.now()
-    # main()
+    main()
     toc = datetime.datetime.now()
     print('\n' + str((toc - tic)))
