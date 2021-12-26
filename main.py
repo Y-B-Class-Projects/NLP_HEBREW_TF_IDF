@@ -84,6 +84,10 @@ def create_cosine_distances_matrix(query_str, docs_files):
     cosine_distances = [it for it in cosine_distances if it[1] != 0]
 
     print(tabulate(cosine_distances[:10], headers=['file', 'cosine distances'], tablefmt='fancy_grid'))
+
+    print('\n| file | cosine distances |\n| ------------- | ------------- |')
+    for doc in cosine_distances[:10]:
+        print('| [', doc[0], '](', doc[0], ')|', doc[1], '|')
     return cosine_distances
 
 
