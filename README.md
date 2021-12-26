@@ -13,7 +13,7 @@ Below are the results for the query
 
 The contents of the files can be viewed by clicking on them
 
-### clean punctuation TF-IDF:
+### Clean punctuation TF-IDF:
 
 | file | cosine distances |
 | ------------- | ------------- |
@@ -28,7 +28,7 @@ The contents of the files can be viewed by clicking on them
 | [2865996.txt](docs/Clean_Punctuation/2865996.txt)|0.7464806018495623|
 | [2579104.txt](docs/Clean_Punctuation/2579104.txt)|0.7520027906747968|
 
-### prefSufWords TF-IDF:
+### PrefSufWords TF-IDF:
 
 | file | cosine distances |
 | ------------- | ------------- |
@@ -43,7 +43,7 @@ The contents of the files can be viewed by clicking on them
 | [2578065prefsuf.txt](docs/Clean_Punctuation/2578065prefsuf.txt)|0.880982998007856|
 | [2777669prefsuf.txt](docs/Clean_Punctuation/2777669prefsuf.txt)|0.8833262914654372|
 
-### rootWord TF-IDF:
+### RootWord TF-IDF:
 
 | file | cosine distances |
 | ------------- | ------------- |
