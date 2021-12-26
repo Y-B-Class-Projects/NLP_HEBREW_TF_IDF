@@ -6,7 +6,7 @@ TF-IDF and vod2vec on 3 types of files in Hebrew.
 
 * Type 2: Files with the roots of the words.
 
-* Type 3: Files with words broken to their roots ("שבמצח" => "שב מצח")
+* Type 3: Files with words broken to their roots ("שבמצח" => "שב מצח").
 
 Below are the results for the query
 `חמאס מלחמה עזה טיל טילים פלסטיני`
