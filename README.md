@@ -2,7 +2,7 @@
 
 | file | cosine distances |
 | ------------- | ------------- |
-| [ docs/Clean_Punctuation/2763273.txt ]( docs\Clean_Punctuation\2763273.txt )| 0.6228006344545287 |
+| [ docs/Clean_Punctuation/2763273.txt ]( docs/Clean_Punctuation/2763273.txt )| 0.6228006344545287 |
 | [ docs\Clean_Punctuation\1705790.txt ]( docs\Clean_Punctuation\1705790.txt )| 0.6850845805742616 |
 | [ docs\Clean_Punctuation\2767820.txt ]( docs\Clean_Punctuation\2767820.txt )| 0.6887950367520226 |
 | [ docs\Clean_Punctuation\3224668.txt ]( docs\Clean_Punctuation\3224668.txt )| 0.6988602770154239 |
