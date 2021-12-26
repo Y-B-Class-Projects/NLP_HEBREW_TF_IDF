@@ -87,7 +87,8 @@ def create_cosine_distances_matrix(query_str, docs_files):
 
     print('\n| file | cosine distances |\n| ------------- | ------------- |')
     for doc in cosine_distances[:10]:
-        print('| [', doc[0].replace("\\", "/"), '](', doc[0].replace("\\", "/"), ')|', doc[1], '|')
+        print('| [', doc[0].split('\\')[2], '](docs/Clean_Punctuation/', doc[0].split('\\')[2], ')|', doc[1], '|',
+              sep="")
     return cosine_distances
 
 
