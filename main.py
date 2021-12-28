@@ -6,9 +6,19 @@ import os
 from collections import Counter
 import numpy as np
 from tqdm import tqdm
-import pickle
 import pandas as pd
 from scipy.spatial import distance
+from gensim.models.doc2vec import Doc2Vec, TaggedDocument
+from nltk.tokenize import word_tokenize
+import nltk
+
+
+def file_to_str(file):
+    _str = ""
+    with open(file, 'r', encoding='utf-8') as f:
+        _str = f.readlines()
+        _str = "".join(_str)
+    return _str
 
 
 def make_dictionary(file):
@@ -49,13 +59,7 @@ def calculate_TF_IDF(wordset, tf_diz, idf_diz):
     return tdidf_values
 
 
-def jaccard_similarity(list1, list2):
-    intersection = len(list(set(list1).intersection(list2)))
-    union = (len(set(list1)) + len(set(list2))) - intersection
-    return float(intersection) / union
-
-
-def create_cosine_distances_matrix(query_str, docs_files):
+def TF_IFD(query_str, docs_files):
     files_words = {}
     all_words = query_str.split()
     for file in tqdm(docs_files):
@@ -109,21 +113,34 @@ def my_csv():
     return my_docs
 
 
+def doc2vec(query_str, docs_files):
+    docs = []
+    for file in tqdm(docs_files):
+        docs.append(file_to_str(file))
+    tokenized_doc = []
+    for d in docs:
+        tokenized_doc.append(word_tokenize(d.lower()))
+    tagged_data = [TaggedDocument(d, [docs_files[i]]) for i, d in enumerate(tokenized_doc)]
+    model = Doc2Vec(tagged_data, vector_size=20, window=2, min_count=1, workers=4, epochs=100)
+    test_doc = word_tokenize(query_str.lower())
+    res = model.docvecs.most_similar(positive=[model.infer_vector(test_doc)], topn=5)
+    print(res)
+
+
 def main():
     folders = ['docs\\Clean_Punctuation\\', 'docs\\prefSufWord\\', 'docs\\rootWord\\']
     query_str = "חמאס מלחמה עזה טיל טילים פלסטינים"
 
-    cosine_distances_matrixs = []
-
     for folder in folders:
         docs_files = [folder + file for file in os.listdir(folder) if file.endswith(".txt")]
-        _matrix = create_cosine_distances_matrix(query_str, docs_files)
-        cosine_distances_matrixs.append(["TF-IDF, " + folder, _matrix])
+        #TF_IFD(query_str, docs_files)
+        doc2vec(query_str, docs_files)
 
     print()
 
 
 if __name__ == '__main__':
+    nltk.download('punkt')
     # my_unzip(my_csv())
     tic = datetime.datetime.now()
     main()
