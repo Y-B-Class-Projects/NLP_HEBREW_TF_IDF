@@ -1,147 +1,63 @@
-import collections
 import datetime
-from zipfile import ZipFile
-from tabulate import tabulate
-import os
-from collections import Counter
-import numpy as np
-from tqdm import tqdm
-import pandas as pd
-from scipy.spatial import distance
-from gensim.models.doc2vec import Doc2Vec, TaggedDocument
-from nltk.tokenize import word_tokenize
+import copy
 import nltk
 
-
-def file_to_str(file):
-    _str = ""
-    with open(file, 'r', encoding='utf-8') as f:
-        _str = f.readlines()
-        _str = "".join(_str)
-    return _str
+from utils import *
+from tfidf import TF_IFD
+from doc2vec import doc2vec
 
 
-def make_dictionary(file):
-    words = []
-    with open(file, 'r', encoding='utf-8') as f:
-        for line in f:
-            words += line.split()
-    return words
-
-
-def calculateTF(wordset, bow, avdl):
-    b = 0.75
-    termfreq_diz = dict.fromkeys(wordset, 0)
-    counter1 = dict(collections.Counter(bow))
-    for w in bow:
-        termfreq_diz[w] = counter1[w] / ((1 - b) + b * len(bow) / avdl)
-    return termfreq_diz
-
-
-def calculate_IDF(wordset, bow):
-    d_bow = {'bow_{}'.format(i): list(set(b)) for i, b in enumerate(bow)}
-    N = len(d_bow.keys())
-    l_bow = []
-    for b in d_bow.values():
-        l_bow += b
-    counter = dict(collections.Counter(l_bow))
-    idf_diz = dict.fromkeys(wordset, 0)
-    for w in wordset:
-        idf_diz[w] = np.log((1 + N) / (1 + counter[w])) + 1
-    return idf_diz
-
-
-def calculate_TF_IDF(wordset, tf_diz, idf_diz):
-    tf_idf_diz = dict.fromkeys(wordset, 0)
-    for w in wordset:
-        tf_idf_diz[w] = tf_diz[w] * idf_diz[w]
-    tdidf_values = list(tf_idf_diz.values())
-    return tdidf_values
-
-
-def TF_IFD(query_str, docs_files):
-    files_words = {}
-    all_words = query_str.split()
-    for file in tqdm(docs_files):
-        files_words[file] = make_dictionary(file)
-        all_words += make_dictionary(file)
-    files_words["Query"] = query_str.split()
-    all_words = Counter(all_words).most_common()
-
-    all_words_temp = []
-    for word in tqdm(all_words):
-        if word[1] > 100 and len(word[0]) > 1:
-            all_words_temp += [word[0]]
-    all_words = all_words_temp
-
-    avdl = np.average([len(bow) for bow in list(files_words.values())])
-    IDF = calculate_IDF(all_words, list(files_words.values()))
-
-    cosine_distances = []
-    query_TF_IDF = calculate_TF_IDF(all_words, calculateTF(all_words, list(files_words.get("Query")), avdl), IDF)
-    for file in tqdm(files_words):
-        if file != "Query":
-            doc_TF_IDF = calculate_TF_IDF(all_words, calculateTF(all_words, files_words[file], avdl), IDF)
-            cosine_distances.append([file, distance.cosine(query_TF_IDF, doc_TF_IDF)])
-
-    cosine_distances = sorted(cosine_distances, key=lambda x: x[1])
-    cosine_distances = [it for it in cosine_distances if it[1] != 0]
-
-    print(tabulate(cosine_distances[:10], headers=['file', 'cosine distances'], tablefmt='fancy_grid'))
-
-    print('\n| file | cosine distances |\n| ------------- | ------------- |')
-    for doc in cosine_distances[:10]:
-        print('| [', doc[0].split('\\')[2], '](docs/Clean_Punctuation/', doc[0].split('\\')[2].replace("root", "").replace("prefsuf", ""), ')|', doc[1], '|',
-              sep="")
-    return cosine_distances
-
-
-def my_unzip(docs_list):
-    index = 0
-    with ZipFile('Clean_Punctuation.zip', 'r') as zipObj:
-        listOfFileNames = ["Clean_Punctuation/" + str(n) + ".txt" for n in docs_list]
-        for fileName in listOfFileNames:
-            zipObj.extract(fileName, 'docs')
-            index += 1
-
-
-def my_csv():
-    pd.options.display.max_rows = 102
-    df = pd.read_csv('data.csv', names=["doc", "type"])
-    my_docs = df["doc"].tolist()
-    my_docs.sort()
-    return my_docs
-
-
-def doc2vec(query_str, docs_files):
-    docs = []
-    for file in tqdm(docs_files):
-        docs.append(file_to_str(file))
-    tokenized_doc = []
-    for d in docs:
-        tokenized_doc.append(word_tokenize(d.lower()))
-    tagged_data = [TaggedDocument(d, [docs_files[i]]) for i, d in enumerate(tokenized_doc)]
-    model = Doc2Vec(tagged_data, vector_size=20, window=2, min_count=1, workers=4, epochs=100)
-    test_doc = word_tokenize(query_str.lower())
-    res = model.docvecs.most_similar(positive=[model.infer_vector(test_doc)], topn=5)
-    print(res)
-
-
-def main():
+def EX_3_2_code():
     folders = ['docs\\Clean_Punctuation\\', 'docs\\prefSufWord\\', 'docs\\rootWord\\']
     query_str = "חמאס מלחמה עזה טיל טילים פלסטינים"
 
     for folder in folders:
         docs_files = [folder + file for file in os.listdir(folder) if file.endswith(".txt")]
-        #TF_IFD(query_str, docs_files)
-        doc2vec(query_str, docs_files)
+        docs = read_files(docs_files)
+        # We used these lines to print and copy the results to README.
+        print_README_table(TF_IFD(copy.deepcopy(docs), False, query_str)[:10])
+        print_README_table(doc2vec(copy.deepcopy(docs), query_str, n_top_docs=10, is_matrix_mode=False))
 
-    print()
+
+def EX_4_code():
+
+    folders = ['docs\\Clean_Punctuation\\', 'docs\\prefSufWord\\', 'docs\\rootWord\\']
+    groups = [['A', 'B'], ['A', 'C'], ['C', 'B']]
+    max_vector_size = 1000
+
+    for group in groups:
+        groups_docs = {}
+        for symbol in group:
+            groups_docs = {**groups_docs, **{str(doc): symbol for doc in my_csv(symbol)}}
+
+        for folder in folders:
+            folder_name = folder.split('\\')[1]
+            group_name = ', '.join(group)
+            print(group_name, ":", folder_name)
+            docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()]
+            docs = read_files(docs_locations)
+            # tf_idf = TF_IFD(copy.deepcopy(docs), max_bow_size=max_vector_size)
+            # tf_idf['symbol'] = tf_idf.apply(lambda row: groups_docs[get_file_name(row.doc_name)], axis=1)
+            # tf_idf = tf_idf.drop('doc_name', axis=1)
+            # real_symbols = tf_idf.loc[:, "symbol"]
+            # plot_kmeans(tf_idf.drop('symbol', axis=1), real_symbols, 'TF-IDF ' + folder_name + ' ' + group_name)
+            doc2vec_vector, doc_locations = doc2vec(copy.deepcopy(docs))
+            real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
+            plot_kmeans(doc2vec_vector, real_symbols,  'DOC2VEC ' + folder_name + ' ' + group_name)
+
+
+def main():
+    """
+    Since this exercise is an exercise that is divided into several sub-exercises, we built a separate function for
+    each sub-exercise.
+    """
+    EX_3_2_code()
+    # EX_4_code()
 
 
 if __name__ == '__main__':
     nltk.download('punkt')
-    # my_unzip(my_csv())
+    # my_unzip(my_csv())    # for the first time you need to unzip all docs.
     tic = datetime.datetime.now()
     main()
     toc = datetime.datetime.now()
