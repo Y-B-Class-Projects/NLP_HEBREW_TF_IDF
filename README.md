@@ -102,7 +102,23 @@ Precision | 0.4953872108150178 | 0.8359163403511047 |
 Recall | 0.4953320576956328 | 0.8380622863769531 |
 
 ![alt text](plots/A,%20C%20Clean_Punctuation%20TF-IDF.png)
+
+| A, C Clean_Punctuation TF-IDF | Kmeans | ANN | 
+| ------------- | ------------- | ------------- |
+Accuracy | 0.4014866851821598 | 0.0|
+F1 | 0.19939552526420415 | 0.6625362038612366 |
+Precision | 0.16014988595633758 | 0.5007400512695312 |
+Recall | 0.26411951206405504 | 1.0 |
+
 ![alt text](plots/A,%20C%20Clean_Punctuation%20doc2vec.png)
+
+| A, C Clean_Punctuation TF-IDF | Kmeans | ANN | 
+| ------------- | ------------- | ------------- |
+Accuracy | 0.2319065512171214 | 0.19273172318935394 |
+F1 | 0.1504983036471586 | 0.7553202509880066 |
+Precision | 0.14849102986557874 | 0.6168949007987976 |
+Recall | 0.15256058896233007 | 0.9883641600608826 |
+
 ![alt text](plots/A,%20C%20prefSufWord%20TF-IDF.png)
 ![alt text](plots/A,%20C%20prefSufWord%20doc2vec.png)
 ![alt text](plots/A,%20C%20rootWord%20TF-IDF.png)
