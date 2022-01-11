@@ -30,7 +30,7 @@ The contents of the files can be viewed by clicking on them
 
 
 
-####doc2vec top 10 files for each category:
+#### doc2vec top 10 files for each category:
 
 | Clean punctuation | similarity | PrefSufWords | similarity | RootWord | similarity |
 | ------------- | ------------- | ------------- | ------------- |------------- | ------------- |
