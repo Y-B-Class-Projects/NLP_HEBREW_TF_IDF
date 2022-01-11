@@ -20,7 +20,7 @@ def EX_3_2_code():
 
 
 def EX_4_code():
-
+    open('plots\\results.txt', 'w+').close()
     folders = ['docs\\Clean_Punctuation\\', 'docs\\prefSufWord\\', 'docs\\rootWord\\']
     groups = [['A', 'B'], ['A', 'C'], ['C', 'B']]
     max_vector_size = 1000
@@ -36,14 +36,20 @@ def EX_4_code():
             print(group_name, ":", folder_name)
             docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()]
             docs = read_files(docs_locations)
-            # tf_idf = TF_IFD(copy.deepcopy(docs), max_bow_size=max_vector_size)
-            # tf_idf['symbol'] = tf_idf.apply(lambda row: groups_docs[get_file_name(row.doc_name)], axis=1)
-            # tf_idf = tf_idf.drop('doc_name', axis=1)
-            # real_symbols = tf_idf.loc[:, "symbol"]
-            # plot_kmeans(tf_idf.drop('symbol', axis=1), real_symbols, 'TF-IDF ' + folder_name + ' ' + group_name)
+
+            tf_idf = TF_IFD(copy.deepcopy(docs), max_bow_size=max_vector_size)
+            tf_idf['symbol'] = tf_idf.apply(lambda row: groups_docs[get_file_name(row.doc_name)], axis=1)
+            tf_idf = tf_idf.drop('doc_name', axis=1)
+            real_symbols = tf_idf.loc[:, "symbol"]
+            kmeans(tf_idf.drop('symbol', axis=1), real_symbols, group_name + ' ' + folder_name + ' TF-IDF')
+            batch_generator(tf_idf.drop('symbol', axis=1), real_symbols,
+                            title=group_name + ' ' + folder_name + ' TF-IDF')
+
             doc2vec_vector, doc_locations = doc2vec(copy.deepcopy(docs))
             real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
-            plot_kmeans(doc2vec_vector, real_symbols,  'DOC2VEC ' + folder_name + ' ' + group_name)
+            kmeans(doc2vec_vector, real_symbols, group_name + ' ' + folder_name + ' doc2vec')
+            batch_generator(tf_idf.drop('symbol', axis=1), real_symbols,
+                            title=group_name + ' ' + folder_name + ' doc2vec')
 
 
 def main():
@@ -51,8 +57,8 @@ def main():
     Since this exercise is an exercise that is divided into several sub-exercises, we built a separate function for
     each sub-exercise.
     """
-    EX_3_2_code()
-    # EX_4_code()
+    # EX_3_2_code()
+    EX_4_code()
 
 
 if __name__ == '__main__':
