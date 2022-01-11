@@ -15,7 +15,7 @@ The contents of the files can be viewed by clicking on them
 
 #### TF-IDF top 10 files for each category:
 
-|._ Clean punctuation | similarity |._ PrefSufWords | similarity |._ RootWord | similarity |
+|**Clean punctuation**| similarity |**PrefSufWords**| similarity |**RootWord**| similarity |
 | ------------- | ------------- | ------------- | ------------- |------------- | ------------- |
 | [2544137.txt](docs/Clean_Punctuation/2544137.txt)|0.6328771355794626| [2763273prefsuf.txt](docs/Clean_Punctuation/2763273.txt)|0.2369911739213888|[2516532root.txt](docs/Clean_Punctuation/2516532.txt)|0.25789237861633374|
 | [1763006.txt](docs/Clean_Punctuation/1763006.txt)|0.6028766297608992| [3224668prefsuf.txt](docs/Clean_Punctuation/3224668.txt)|0.2360844896168185|[1763006root.txt](docs/Clean_Punctuation/1763006.txt)|0.25522720092802675|
@@ -32,7 +32,7 @@ The contents of the files can be viewed by clicking on them
 
 #### doc2vec top 10 files for each category:
 
-|._ Clean punctuation | similarity |._ PrefSufWords | similarity |._ RootWord | similarity |
+|**Clean punctuation**| similarity |**PrefSufWords**| similarity |**RootWord**| similarity |
 | ------------- | ------------- | ------------- | ------------- |------------- | ------------- |
 | [2815711.txt](docs/Clean_Punctuation/2815711.txt)|0.8379393219947815 | [3215204prefsuf.txt](docs/Clean_Punctuation/3215204.txt)|0.8451696634292603| [2654951root.txt](docs/Clean_Punctuation/2654951.txt)|0.8426624536514282|
 | [3184780.txt](docs/Clean_Punctuation/3184780.txt)|0.8259774446487427 | [1811559prefsuf.txt](docs/Clean_Punctuation/1811559.txt)|0.8209106922149658| [3204941root.txt](docs/Clean_Punctuation/3204941.txt)|0.8411526679992676|
