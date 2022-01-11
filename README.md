@@ -105,26 +105,26 @@ The contents of the files can be viewed by clicking on them
 
 
 
-![alt text](plots/A,%20B Clean_Punctuation TF-IDF.png)
-![alt text](plots/A,%20B Clean_Punctuation doc2vec.png)
-![alt text](plots/A,%20B prefSufWord TF-IDF.png)
-![alt text](plots/A,%20B prefSufWord doc2vec.png)
-![alt text](plots/A,%20B rootWord TF-IDF.png)
-![alt text](plots/A,%20B rootWord doc2vec.png)
+![alt text](plots/A,%20B%20Clean_Punctuation%20TF-IDF.png)
+![alt text](plots/A,%20B%20Clean_Punctuation%20doc2vec.png)
+![alt text](plots/A,%20B%20prefSufWord%20TF-IDF.png)
+![alt text](plots/A,%20B%20prefSufWord%20doc2vec.png)
+![alt text](plots/A,%20B%20rootWord%20TF-IDF.png)
+![alt text](plots/A,%20B%20rootWord%20doc2vec.png)
 
-![alt text](plots/A,%20C Clean_Punctuation TF-IDF.png)
-![alt text](plots/A,%20C Clean_Punctuation doc2vec.png)
-![alt text](plots/A,%20C prefSufWord TF-IDF.png)
-![alt text](plots/A,%20C prefSufWord doc2vec.png)
-![alt text](plots/A,%20C rootWord TF-IDF.png)
-![alt text](plots/A,%20C rootWord doc2vec.png)
+![alt text](plots/A,%20C%20Clean_Punctuation%20TF-IDF.png)
+![alt text](plots/A,%20C%20Clean_Punctuation%20doc2vec.png)
+![alt text](plots/A,%20C%20prefSufWord%20TF-IDF.png)
+![alt text](plots/A,%20C%20prefSufWord%20doc2vec.png)
+![alt text](plots/A,%20C%20rootWord%20TF-IDF.png)
+![alt text](plots/A,%20C%20rootWord%20doc2vec.png)
 
-![alt text](plots/C,%20B Clean_Punctuation TF-IDF.png)
-![alt text](plots/C,%20B Clean_Punctuation doc2vec.png)
-![alt text](plots/C,%20B prefSufWord TF-IDF.png)
-![alt text](plots/C,%20B prefSufWord doc2vec.png)
-![alt text](plots/C,%20B rootWord TF-IDF.png)
-![alt text](plots/C,%20B rootWord doc2vec.png)
+![alt text](plots/C,%20B%20Clean_Punctuation%20TF-IDF.png)
+![alt text](plots/C,%20B%20Clean_Punctuation%20doc2vec.png)
+![alt text](plots/C,%20B%20prefSufWord%20TF-IDF.png)
+![alt text](plots/C,%20B%20prefSufWord%20doc2vec.png)
+![alt text](plots/C,%20B%20rootWord%20TF-IDF.png)
+![alt text](plots/C,%20B%20rootWord%20doc2vec.png)
 
 | A, B Clean_Punctuation TF-IDF | Kmeans | ANN | 
 | ------------- | ------------- | ------------- |
