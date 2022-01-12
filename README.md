@@ -112,7 +112,7 @@ Recall | 0.26411951206405504 | 1.0 |
 
 ![alt text](plots/A,%20C%20Clean_Punctuation%20doc2vec.png)
 
-| A, C Clean_Punctuation TF-IDF | Kmeans | ANN | 
+| A, C Clean_Punctuation doc2vec | Kmeans | ANN | 
 | ------------- | ------------- | ------------- |
 Accuracy | 0.2319065512171214 | 0.19273172318935394 |
 F1 | 0.1504983036471586 | 0.7553202509880066 |
