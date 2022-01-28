@@ -1,10 +1,8 @@
 import os
-import sys
+import shutil
 from collections import Counter
 from zipfile import ZipFile
 import pandas as pd
-from keras.callbacks import EarlyStopping
-from tabulate import tabulate
 from tqdm import tqdm
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -13,10 +11,13 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from keras.models import Sequential
-from keras.layers import Dense, Flatten
+from keras.layers import Dense
 from keras import backend as K
 from sklearn.model_selection import train_test_split
 import numpy as np
+import tensorflow as tf
+from official.nlp import optimization
+import tensorflow_hub as hub
 
 
 def file_to_str(file):
@@ -173,25 +174,29 @@ def f1_m(y_true, y_pred):
     return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
 
 
-def batch_generator(x_data, y_data, batch_size=128, title=''):
+def fit_and_evaluate_ann(x_train, y_train, x_test, y_test, batch_size):
+    ann_model = Sequential()
+    ann_model.add(Dense(10, activation='relu'))
+    ann_model.add(Dense(10, activation='relu'))
+    ann_model.add(Dense(7, activation='relu'))
+    ann_model.add(Dense(1, activation='sigmoid'))
+    ann_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc', f1_m, precision_m, recall_m])
+    ann_model.fit(x_train, y_train, batch_size=batch_size, epochs=15, validation_split=0.1)
+    return ann_model.evaluate(x_test, y_test)
+
+
+def split_data(x_data, y_data):
+    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, train_size=0.8, random_state=1000)
+    return np.asarray(x_train), np.asarray(y_train), np.asarray(x_test), np.asarray(y_test)
+
+
+def AI_classification(x_data, y_data, batch_size=128, title=''):
     mapping = {'A': 0, 'B': 1, 'C': 2}
     y_data = [mapping[i] for i in y_data]
 
-    model = Sequential()
-    model.add(Dense(10, activation='relu'))
-    model.add(Dense(10, activation='relu'))
-    model.add(Dense(7, activation='relu'))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc', f1_m, precision_m, recall_m])
+    x_train, y_train, x_test, y_test = split_data(x_data, y_data)
+    loss, accuracy, f1, precision, recall = fit_and_evaluate_ann(x_train, y_train, x_test, y_test, batch_size)
 
-    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, train_size=0.8, random_state=1000)
-    x_train = np.asarray(x_train)
-    y_train = np.asarray(y_train)
-    x_test = np.asarray(x_test)
-    y_test = np.asarray(y_test)
-
-    model.fit(x_train, y_train, batch_size=batch_size, epochs=15, validation_split=0.1)
-    loss, accuracy, f1, precision, recall = model.evaluate(x_test, y_test, verbose=0)
     print()
     print('\n|', title, '|  |\n| ------------- | ------------- |')
     for v in [["Accuracy", accuracy], ["F1", f1], ["Precision", precision], ["Recall", recall]]:
@@ -204,3 +209,22 @@ def batch_generator(x_data, y_data, batch_size=128, title=''):
         file.writelines("Precision:" + str(precision) + "\n")
         file.writelines("Accuracy:" + str(accuracy) + "\n")
         file.writelines("\n")
+
+
+def symbols_docs_to_folders(folders):
+    for folder in folders:
+        for symbol in ['A', 'B', 'C']:
+            dst_folder = folder.replace('docs', 'symboled_docs') + symbol
+            os.makedirs(dst_folder, exist_ok=True)
+            for doc in tqdm(my_csv(symbol)):
+                add_str = ''
+                if folder == 'docs\\prefSufWord\\':
+                    add_str = 'prefsuf'
+                elif folder == 'docs\\rootWord\\':
+                    add_str = 'root'
+                doc_str = str(doc) + add_str + ".txt"
+                src = folder + doc_str
+                dst = dst_folder + "\\" + doc_str
+                if not os.path.exists(dst):
+                    shutil.copyfile(src, dst)
+        print()

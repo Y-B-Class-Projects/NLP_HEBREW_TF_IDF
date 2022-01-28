@@ -90,7 +90,6 @@ def TF_IFD(docs, is_matrix_mode=True, query='', max_bow_size=100):
         if is_matrix_mode:
             doc_tf_idf['doc_name'] = doc_name
             TF_IFD_matrix = TF_IFD_matrix.append(doc_tf_idf, ignore_index=True)
-            # TF_IFD_matrix.append([doc_name, doc_tf_idf])
         else:
             cosine_similarity.append([doc_name, 1 - distance.cosine(pd.Series(query_tf_idf), pd.Series(doc_tf_idf))])
 
