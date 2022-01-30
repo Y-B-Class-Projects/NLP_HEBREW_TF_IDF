@@ -41,7 +41,7 @@ def EX_4_code():
         for folder in folders:
             title = ', '.join(group) + ' ' + folder.split('\\')[1]
             print(title)
-            docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()]
+            docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()][5000:7000]
             docs = read_files(docs_locations)
 
             # TF_IFD classification
