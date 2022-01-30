@@ -15,9 +15,7 @@ from keras.layers import Dense
 from keras import backend as K
 from sklearn.model_selection import train_test_split
 import numpy as np
-import tensorflow as tf
-from official.nlp import optimization
-import tensorflow_hub as hub
+import dataframe_image as dfi
 
 
 def file_to_str(file):
@@ -104,16 +102,7 @@ def get_file_name(file):
     return os.path.basename(file).replace('prefsuf', '').replace('root', '').replace('.txt', '')
 
 
-def kmeans(df, real_symbols, title):
-    print("[LOG] Ploting", title)
-    _scalar = StandardScaler()
-    _scalar.fit(df)
-    print("starting k-means")
-    kmeans_scale = KMeans(n_clusters=2).fit(df)
-    labels_scale = kmeans_scale.labels_
-    mapping = {0: 'A', 1: 'B', 2: 'C'}
-    predict = [mapping[i] for i in labels_scale]
-    pca_features = PCA(n_components=2).fit(df).transform(df)
+def plot_results(pca_features, predict, real_symbols, title):
     fig, (ax1, ax2) = plt.subplots(1, 2, sharex=True, figsize=(20, 10))
     fig.suptitle(title, fontsize=16)
     sns.scatterplot(pca_features[:, 0], pca_features[:, 1], palette='Set1', hue=predict, s=100, alpha=0.2,
@@ -128,22 +117,46 @@ def kmeans(df, real_symbols, title):
     ax2.set_ylabel("PC2")
     plt.savefig('plots\\' + title + '.png')
 
-    accuracy = str(accuracy_score(real_symbols, predict))
-    f1 = str(f1_score(real_symbols, predict, average='macro'))
-    precision = str(precision_score(real_symbols, predict, average='macro'))
-    recall = str(recall_score(real_symbols, predict, average='macro'))
-    print()
-    print('\n|', title, '|  |\n| ------------- | ------------- |')
-    for v in [["Accuracy", accuracy], ["F1", f1], ["Precision", precision], ["Recall", recall]]:
-        print(v[0], '|', v[1], '|')
-    print()
-    with open('plots\\results.txt', 'a') as file:
-        file.writelines(title + ' kmeans' "\n")
-        file.writelines("Recall:" + recall + "\n")
-        file.writelines("F1:" + f1 + "\n")
-        file.writelines("Precision:" + precision + "\n")
-        file.writelines("Accuracy:" + accuracy + "\n")
-        file.writelines("\n")
+
+def kmeans(df, real_symbols, title):
+    print("[LOG] Ploting", title)
+    symbols_names = list(set(real_symbols))
+    _scalar = StandardScaler()
+    _scalar.fit(df)
+    print("[LOG] starting k-means")
+    kmeans_scale = KMeans(n_clusters=2).fit(df)
+    labels_scale = kmeans_scale.labels_
+    mapping_option_01 = {0: symbols_names[0], 1: symbols_names[-1]}
+    mapping_option_02 = {0: symbols_names[-1], 1: symbols_names[0]}
+    predict_option_01 = [mapping_option_01[i] for i in labels_scale]
+    predict_option_02 = [mapping_option_02[i] for i in labels_scale]
+    pca_features = PCA(n_components=2).fit(df).transform(df)
+
+    accuracy_option_01 = str(accuracy_score(real_symbols, predict_option_01))
+    accuracy_option_02 = str(accuracy_score(real_symbols, predict_option_02))
+
+    if accuracy_option_01 >= accuracy_option_02:
+        accuracy = accuracy_option_01
+        predict = predict_option_01
+    else:
+        accuracy = accuracy_option_02
+        predict = predict_option_02
+
+    f1_option_01 = str(f1_score(real_symbols, predict, pos_label=symbols_names[0]))
+    f1_option_02 = str(f1_score(real_symbols, predict, pos_label=symbols_names[-1]))
+
+    if f1_option_01 >= f1_option_02:
+        f1 = f1_option_01
+        pos_label = symbols_names[0]
+    else:
+        f1 = f1_option_02
+        pos_label = symbols_names[-1]
+
+    precision = str(precision_score(real_symbols, predict, pos_label=pos_label))
+    recall = str(recall_score(real_symbols, predict, pos_label=pos_label))
+
+    plot_results(pca_features, predict, real_symbols, title)
+    return [accuracy, f1, precision, recall]
 
 
 def get_stop_words():
@@ -174,7 +187,16 @@ def f1_m(y_true, y_pred):
     return 2 * ((precision * recall) / (precision + recall + K.epsilon()))
 
 
-def fit_and_evaluate_ann(x_train, y_train, x_test, y_test, batch_size):
+def split_data(x_data, y_data):
+    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, train_size=0.8, random_state=1000)
+    return np.asarray(x_train), np.asarray(y_train), np.asarray(x_test), np.asarray(y_test)
+
+
+def ann(x_data, y_data, batch_size=128, title=''):
+    mapping = {'A': 0, 'B': 1, 'C': 2}
+    y_data = [mapping[i] for i in y_data]
+
+    x_train, y_train, x_test, y_test = split_data(x_data, y_data)
     ann_model = Sequential()
     ann_model.add(Dense(10, activation='relu'))
     ann_model.add(Dense(10, activation='relu'))
@@ -182,33 +204,9 @@ def fit_and_evaluate_ann(x_train, y_train, x_test, y_test, batch_size):
     ann_model.add(Dense(1, activation='sigmoid'))
     ann_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc', f1_m, precision_m, recall_m])
     ann_model.fit(x_train, y_train, batch_size=batch_size, epochs=15, validation_split=0.1)
-    return ann_model.evaluate(x_test, y_test)
+    loss, accuracy, f1, precision, recall = ann_model.evaluate(x_test, y_test)
 
-
-def split_data(x_data, y_data):
-    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, train_size=0.8, random_state=1000)
-    return np.asarray(x_train), np.asarray(y_train), np.asarray(x_test), np.asarray(y_test)
-
-
-def AI_classification(x_data, y_data, batch_size=128, title=''):
-    mapping = {'A': 0, 'B': 1, 'C': 2}
-    y_data = [mapping[i] for i in y_data]
-
-    x_train, y_train, x_test, y_test = split_data(x_data, y_data)
-    loss, accuracy, f1, precision, recall = fit_and_evaluate_ann(x_train, y_train, x_test, y_test, batch_size)
-
-    print()
-    print('\n|', title, '|  |\n| ------------- | ------------- |')
-    for v in [["Accuracy", accuracy], ["F1", f1], ["Precision", precision], ["Recall", recall]]:
-        print(v[0], '|', v[1], '|')
-    print()
-    with open('plots\\results.txt', 'a') as file:
-        file.writelines(title + ' ann' "\n")
-        file.writelines("Recall:" + str(recall) + "\n")
-        file.writelines("F1:" + str(f1) + "\n")
-        file.writelines("Precision:" + str(precision) + "\n")
-        file.writelines("Accuracy:" + str(accuracy) + "\n")
-        file.writelines("\n")
+    return [accuracy, f1, precision, recall]
 
 
 def symbols_docs_to_folders(folders):
@@ -228,3 +226,27 @@ def symbols_docs_to_folders(folders):
                 if not os.path.exists(dst):
                     shutil.copyfile(src, dst)
         print()
+
+
+def print_results_table(title, k_means_res, ann_res):
+    with open('plots\\results.txt', 'a') as file:
+        print()
+        file.writelines("\n")
+        first_line = '\n| ' + title + ' | k-means | ANN |\n| ------------- | ------------- | ------------- | '
+        print(first_line)
+        file.writelines(first_line)
+        for table_line in [["Accuracy", k_means_res[0], ann_res[0]], ["F1", k_means_res[1], ann_res[1]],
+                           ["Precision", k_means_res[2], ann_res[2]], ["Recall", k_means_res[3], ann_res[3]]]:
+            line = '\n' + str(table_line[0]) + ' | ' + str(table_line[1]) + ' | ' + str(table_line[2]) + ' | '
+            print(line)
+            file.writelines(line)
+        print()
+        file.writelines("\n")
+
+    k_means_res = ["{:.2%}".format(float(num)) for num in k_means_res]
+    ann_res = ["{:.2%}".format(float(num)) for num in ann_res]
+
+    df = pd.DataFrame({'k-means': k_means_res, 'ANN': ann_res})
+    df.index = ['Accuracy', 'F1', 'Precision', 'Recall']
+    df.columns.name = title
+    dfi.export(df, 'plots\\' + title + '_table.jpeg', fontsize=22)

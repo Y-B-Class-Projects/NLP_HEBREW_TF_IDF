@@ -49,6 +49,8 @@ The contents of the files can be viewed by clicking on them
 
 ![alt text](plots/A,%20B%20Clean_Punctuation%20TF-IDF.png)
 
+![alt text](plots/A,%20B%20Clean_Punctuation%20TF-IDF_table.jpeg)
+
 | A, B Clean_Punctuation TF-IDF | Kmeans | ANN | 
 | ------------- | ------------- | ------------- |
 Accuracy | 0.4681462328521152 | 0.818312406539917 |
@@ -208,8 +210,6 @@ Accuracy | 0.2681154153644887 | 0.5490552186965942 |
 F1 | 0.165188966505463 | 1.0 |
 Precision | 0.17154947916666666 | 1.0 |
 Recall | 0.1592832469775475 | 1.0 |
-
-
 
 
 

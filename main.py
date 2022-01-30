@@ -6,16 +6,13 @@ from BERT import BERT
 from utils import *
 from tfidf import TF_IFD
 from doc2vec import doc2vec
-
 import os
-import shutil
-import tensorflow as tf
-import tensorflow_hub as hub
-import tensorflow_text as text
-from official.nlp import optimization  # to create AdamW optimizer
-import splitfolders
 
-tf.get_logger().setLevel('ERROR')
+
+def vectors_classification(x_vectors, y, title):
+    k_means_res = kmeans(x_vectors, y, title)
+    ann_res = ann(x_vectors, y, title=title)
+    print_results_table(title, k_means_res, ann_res)
 
 
 def EX_3_2_code():
@@ -42,31 +39,25 @@ def EX_4_code():
             groups_docs = {**groups_docs, **{str(doc): symbol for doc in my_csv(symbol)}}
 
         for folder in folders:
-            folder_name = folder.split('\\')[1]
-            group_name = ', '.join(group)
-            print(group_name, ":", folder_name)
-            docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()][:1000]
+            title = ', '.join(group) + ' ' + folder.split('\\')[1]
+            print(title)
+            docs_locations = [folder + file for file in os.listdir(folder) if get_file_name(file) in groups_docs.keys()]
             docs = read_files(docs_locations)
 
-            # tf_idf = TF_IFD(copy.deepcopy(docs), max_bow_size=max_vector_size)
-            # tf_idf['symbol'] = tf_idf.apply(lambda row: groups_docs[get_file_name(row.doc_name)], axis=1)
-            # tf_idf = tf_idf.drop('doc_name', axis=1)
-            # real_symbols = tf_idf.loc[:, "symbol"]
-            # kmeans(tf_idf.drop('symbol', axis=1), real_symbols, group_name + ' ' + folder_name + ' TF-IDF')
-            # AI_classification(tf_idf.drop('symbol', axis=1), real_symbols,
-            #                   title=group_name + ' ' + folder_name + ' TF-IDF')
-            #
-            # doc2vec_vector, doc_locations = doc2vec(copy.deepcopy(docs))
-            # real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
-            # kmeans(doc2vec_vector, real_symbols, group_name + ' ' + folder_name + ' doc2vec')
-            # AI_classification(doc2vec_vector, real_symbols,
-            #                   title=group_name + ' ' + folder_name + ' doc2vec')
-
-            BERT_vector, doc_locations = BERT(copy.deepcopy(docs))
+            # TF_IFD classification
+            TF_IFD_vectors, doc_locations = TF_IFD(docs, max_bow_size=max_vector_size)
             real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
-            kmeans(BERT_vector, real_symbols, group_name + ' ' + folder_name + ' BERT')
-            AI_classification(BERT_vector, real_symbols,
-                              title=group_name + ' ' + folder_name + ' BERT')
+            vectors_classification(TF_IFD_vectors, real_symbols, title + ' TF-IDF')
+
+            # doc2vec classification
+            doc2vec_vector, doc_locations = doc2vec(docs)
+            real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
+            vectors_classification(doc2vec_vector, real_symbols, title + ' doc2vec')
+
+            # BERT classification
+            BERT_vector, doc_locations = BERT(docs)
+            real_symbols = [groups_docs[get_file_name(doc)] for doc in doc_locations]
+            vectors_classification(BERT_vector, real_symbols, title + ' BERT')
 
 
 def main():

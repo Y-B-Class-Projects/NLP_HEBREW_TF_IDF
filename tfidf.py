@@ -1,3 +1,4 @@
+import copy
 import math
 from scipy.spatial import distance
 from utils import *
@@ -68,6 +69,7 @@ def TF_IFD(docs, is_matrix_mode=True, query='', max_bow_size=100):
     :param max_bow_size: max bag-of-words size.
     :return:
     """
+    docs = copy.deepcopy(docs)
     print("[LOG] Calculating TF-IDF")
     if not is_matrix_mode:
         docs['query'] = query.split()
@@ -77,7 +79,8 @@ def TF_IFD(docs, is_matrix_mode=True, query='', max_bow_size=100):
         bow = list(set(bow))    # remove duplicates.
     avg_doc_length = np.average([len(words) for words in docs.values()])
     idf = calculate_IDF(docs.values(), bow)
-    TF_IFD_matrix = pd.DataFrame()
+    TF_IFD_vectors = []
+    docs_location = []
     cosine_similarity = []
 
     if not is_matrix_mode:
@@ -88,13 +91,13 @@ def TF_IFD(docs, is_matrix_mode=True, query='', max_bow_size=100):
         doc_tf = calculateTF(doc_words, bow, avg_doc_length)
         doc_tf_idf = calculate_doc_TF_IDF(doc_tf, idf, bow)
         if is_matrix_mode:
-            doc_tf_idf['doc_name'] = doc_name
-            TF_IFD_matrix = TF_IFD_matrix.append(doc_tf_idf, ignore_index=True)
+            docs_location.append(doc_name)
+            TF_IFD_vectors.append(list(doc_tf_idf.values()))
         else:
             cosine_similarity.append([doc_name, 1 - distance.cosine(pd.Series(query_tf_idf), pd.Series(doc_tf_idf))])
 
     if is_matrix_mode:
-        return TF_IFD_matrix
+        return TF_IFD_vectors, docs_location
     else:
         cosine_similarity = sorted(cosine_similarity, key=lambda x: x[1], reverse=True)
         cosine_similarity = [it for it in cosine_similarity if it[1] != 1]
