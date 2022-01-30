@@ -46,7 +46,7 @@ The contents of the files can be viewed by clicking on them
 | [2683497.txt](docs/Clean_Punctuation/2683497.txt)|0.7872658371925354 | [1544126prefsuf.txt](docs/Clean_Punctuation/1544126.txt)|0.7872987389564514| [3209043root.txt](docs/Clean_Punctuation/3209043.txt)|0.776106595993042|
 
 ---
-Groups A, B  clean punctuation `TF-IDF`
+### Groups A, B  clean punctuation `TF-IDF`
 
 ![alt text](plots/A,%20B%20Clean_Punctuation%20TF-IDF.png)
 
@@ -54,7 +54,7 @@ Groups A, B  clean punctuation `TF-IDF`
 ![alt text](plots/A,%20B%20Clean_Punctuation%20TF-IDF_table.jpeg)
 
 ---
-Groups A, B  clean punctuation `doc2vec`
+### Groups A, B  clean punctuation `doc2vec`
 
 
 ![alt text](plots/A,%20B%20Clean_Punctuation%20doc2vec.png)
@@ -63,14 +63,14 @@ Groups A, B  clean punctuation `doc2vec`
 ![alt text](plots/A,%20B%20Clean_Punctuation%20doc2vec_table.jpeg)
 
 ---
-Groups A, B  clean punctuation `BERT`
+### Groups A, B  clean punctuation `BERT`
 
 ![alt text](plots/A,%20B%20Clean_Punctuation%20BERT.png)
 
 ![alt text](plots/A,%20B%20Clean_Punctuation%20BERT_table.jpeg)
 
 ---
-Groups A, B  prefSufWord `TF-IDF`
+### Groups A, B  prefSufWord `TF-IDF`
 
 ![alt text](plots/A,%20B%20prefSufWord%20TF-IDF.png)
 
@@ -78,7 +78,7 @@ Groups A, B  prefSufWord `TF-IDF`
 ![alt text](plots/A,%20B%20prefSufWord%20TF-IDF_table.jpeg)
 
 ---
-Groups A, B  prefSufWord `doc2vec`
+### Groups A, B  prefSufWord `doc2vec`
 
 ![alt text](plots/A,%20B%20prefSufWord%20doc2vec.png)
 
@@ -86,7 +86,7 @@ Groups A, B  prefSufWord `doc2vec`
 ![alt text](plots/A,%20B%20prefSufWord%20doc2vec_table.jpeg)
 
 ---
-Groups A, B  prefSufWord `BERT`
+### Groups A, B  prefSufWord `BERT`
 
 ![alt text](plots/A,%20B%20prefSufWord%20BERT.png)
 
@@ -94,7 +94,7 @@ Groups A, B  prefSufWord `BERT`
 ![alt text](plots/A,%20B%20prefSufWord%20BERT_table.jpeg)
 
 ---
-Groups A, B  rootWord `TF-IDF`
+### Groups A, B  rootWord `TF-IDF`
 
 ![alt text](plots/A,%20B%20rootWord%20TF-IDF.png)
 
@@ -102,7 +102,7 @@ Groups A, B  rootWord `TF-IDF`
 ![alt text](plots/A,%20B%20rootWord%20TF-IDF_table.jpeg)
 
 ---
-Groups A, B  rootWord `doc2vec`
+### Groups A, B  rootWord `doc2vec`
 
 ![alt text](plots/A,%20B%20rootWord%20doc2vec.png)
 
@@ -110,7 +110,7 @@ Groups A, B  rootWord `doc2vec`
 ![alt text](plots/A,%20B%20rootWord%20doc2vec_table.jpeg)
 
 ---
-Groups A, B  rootWord `BERT`
+### Groups A, B  rootWord `BERT`
 
 ![alt text](plots/A,%20B%20rootWord%20BERT.png)
 
@@ -118,7 +118,7 @@ Groups A, B  rootWord `BERT`
 ![alt text](plots/A,%20B%20rootWord%20BERT_table.jpeg)
 
 ---
-Groups A, C  clean punctuation `TF-IDF`
+### Groups A, C  clean punctuation `TF-IDF`
 
 ![alt text](plots/A,%20C%20Clean_Punctuation%20TF-IDF.png)
 
@@ -126,7 +126,7 @@ Groups A, C  clean punctuation `TF-IDF`
 ![alt text](plots/A,%20C%20Clean_Punctuation%20TF-IDF_table.jpeg)
 
 ---
-Groups A, C  clean punctuation `doc2vec`
+### Groups A, C  clean punctuation `doc2vec`
 
 ![alt text](plots/A,%20C%20Clean_Punctuation%20doc2vec.png)
 
@@ -134,7 +134,7 @@ Groups A, C  clean punctuation `doc2vec`
 ![alt text](plots/A,%20C%20Clean_Punctuation%20doc2vec_table.jpeg)
 
 ---
-Groups A, C  clean punctuation `BERT`
+### Groups A, C  clean punctuation `BERT`
 
 ![alt text](plots/A,%20C%20Clean_Punctuation%20BERT.png)
 
@@ -142,7 +142,7 @@ Groups A, C  clean punctuation `BERT`
 ![alt text](plots/A,%20C%20Clean_Punctuation%20BERT_table.jpeg)
 
 ---
-Groups A, C  prefSufWord `TF-IDF`
+### Groups A, C  prefSufWord `TF-IDF`
 
 ![alt text](plots/A,%20C%20prefSufWord%20TF-IDF.png)
 
@@ -150,7 +150,7 @@ Groups A, C  prefSufWord `TF-IDF`
 ![alt text](plots/A,%20C%20prefSufWord%20TF-IDF_table.jpeg)
 
 ---
-Groups A, C  prefSufWord `doc2vec`
+### Groups A, C  prefSufWord `doc2vec`
 
 ![alt text](plots/A,%20C%20prefSufWord%20doc2vec.png)
 
@@ -158,7 +158,7 @@ Groups A, C  prefSufWord `doc2vec`
 ![alt text](plots/A,%20C%20prefSufWord%20doc2vec_table.jpeg)
 
 ---
-Groups A, C  prefSufWord `BERT`
+### Groups A, C  prefSufWord `BERT`
 
 ![alt text](plots/A,%20C%20prefSufWord%20BERT.png)
 
@@ -166,7 +166,7 @@ Groups A, C  prefSufWord `BERT`
 ![alt text](plots/A,%20C%20prefSufWord%20BERT_table.jpeg)
 
 ---
-Groups A, C  rootWord `TF-IDF`
+### Groups A, C  rootWord `TF-IDF`
 
 ![alt text](plots/A,%20C%20rootWord%20TF-IDF.png)
 
@@ -174,7 +174,7 @@ Groups A, C  rootWord `TF-IDF`
 ![alt text](plots/A,%20C%20rootWord%20TF-IDF_table.jpeg)
 
 ---
-Groups A, C  rootWord `doc2vec`
+### Groups A, C  rootWord `doc2vec`
 
 ![alt text](plots/A,%20C%20rootWord%20doc2vec.png)
 
@@ -182,7 +182,7 @@ Groups A, C  rootWord `doc2vec`
 ![alt text](plots/A,%20C%20rootWord%20doc2vec_table.jpeg)
 
 ---
-Groups A, C  rootWord `BERT`
+### Groups A, C  rootWord `BERT`
 
 ![alt text](plots/A,%20C%20rootWord%20BERT.png)
 
@@ -190,7 +190,7 @@ Groups A, C  rootWord `BERT`
 ![alt text](plots/A,%20C%20rootWord%20BERT_table.jpeg)
 
 ---
-Groups C, B  clean punctuation `TF-IDF`
+### Groups C, B  clean punctuation `TF-IDF`
 
 ![alt text](plots/C,%20B%20Clean_Punctuation%20TF-IDF.png)
 
@@ -198,7 +198,7 @@ Groups C, B  clean punctuation `TF-IDF`
 ![alt text](plots/C,%20B%20Clean_Punctuation%20TF-IDF_table.jpeg)
 
 ---
-Groups C, B  clean punctuation `doc2vec`
+### Groups C, B  clean punctuation `doc2vec`
 
 ![alt text](plots/C,%20B%20Clean_Punctuation%20doc2vec.png)
 
@@ -206,7 +206,7 @@ Groups C, B  clean punctuation `doc2vec`
 ![alt text](plots/C,%20B%20Clean_Punctuation%20doc2vec_table.jpeg)
 
 ---
-Groups C, B  clean punctuation `BERT`
+### Groups C, B  clean punctuation `BERT`
 
 ![alt text](plots/C,%20B%20Clean_Punctuation%20BERT.png)
 
@@ -214,7 +214,7 @@ Groups C, B  clean punctuation `BERT`
 ![alt text](plots/C,%20B%20Clean_Punctuation%20BERT_table.jpeg)
 
 ---
-Groups C, B  prefSufWord `TF-IDF`
+### Groups C, B  prefSufWord `TF-IDF`
 
 ![alt text](plots/C,%20B%20prefSufWord%20TF-IDF.png)
 
@@ -222,7 +222,7 @@ Groups C, B  prefSufWord `TF-IDF`
 ![alt text](plots/C,%20B%20prefSufWord%20TF-IDF_table.jpeg)
 
 ---
-Groups C, B  prefSufWord `doc2vec`
+### Groups C, B  prefSufWord `doc2vec`
 
 ![alt text](plots/C,%20B%20prefSufWord%20doc2vec.png)
 
@@ -230,7 +230,7 @@ Groups C, B  prefSufWord `doc2vec`
 ![alt text](plots/C,%20B%20prefSufWord%20doc2vec_table.jpeg)
 
 ---
-Groups C, B  prefSufWord `BERT`
+### Groups C, B  prefSufWord `BERT`
 
 ![alt text](plots/C,%20B%20prefSufWord%20BERT.png)
 
@@ -238,7 +238,7 @@ Groups C, B  prefSufWord `BERT`
 ![alt text](plots/C,%20B%20prefSufWord%20BERT_table.jpeg)
 
 ---
-Groups C, B  rootWord `TF-IDF`
+### Groups C, B  rootWord `TF-IDF`
 
 ![alt text](plots/C,%20B%20rootWord%20TF-IDF.png)
 
@@ -246,7 +246,7 @@ Groups C, B  rootWord `TF-IDF`
 ![alt text](plots/C,%20B%20rootWord%20TF-IDF_table.jpeg)
 
 ---
-Groups C, B  rootWord `doc2vec`
+### Groups C, B  rootWord `doc2vec`
 
 ![alt text](plots/C,%20B%20rootWord%20doc2vec.png)
 
@@ -254,7 +254,8 @@ Groups C, B  rootWord `doc2vec`
 ![alt text](plots/C,%20B%20rootWord%20doc2vec_table.jpeg)
 
 ---
-Groups C, B  rootWord `BERT`
+
+### Groups C, B  rootWord `BERT`
 
 ![alt text](plots/C,%20B%20rootWord%20BERT.png)
 
