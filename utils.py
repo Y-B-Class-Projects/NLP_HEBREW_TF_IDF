@@ -49,6 +49,7 @@ def read_file(file):
         for line in f:
             words += line.split()
     words = [clean(w) for w in words]
+    words = [w for w in words if len(w) > 1]
     return words
 
 
@@ -194,8 +195,9 @@ def split_data(x_data, y_data):
     return np.asarray(x_train), np.asarray(y_train), np.asarray(x_test), np.asarray(y_test)
 
 
-def ann(x_data, y_data, batch_size=128, title=''):
-    mapping = {'A': 0, 'B': 1, 'C': 2}
+def ann(x_data, y_data, batch_size=128):
+    symbols_names = list(set(y_data))
+    mapping = {symbols_names[0]: 0, symbols_names[-1]: 1}
     y_data = [mapping[i] for i in y_data]
 
     x_train, y_train, x_test, y_test = split_data(x_data, y_data)
@@ -204,30 +206,11 @@ def ann(x_data, y_data, batch_size=128, title=''):
     ann_model.add(Dense(10, activation='relu'))
     ann_model.add(Dense(7, activation='relu'))
     ann_model.add(Dense(1, activation='sigmoid'))
-    ann_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['acc', f1_m, precision_m, recall_m])
+    ann_model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy', f1_m, precision_m, recall_m])
     ann_model.fit(x_train, y_train, batch_size=batch_size, epochs=15, validation_split=0.1)
     loss, accuracy, f1, precision, recall = ann_model.evaluate(x_test, y_test)
 
     return [accuracy, f1, precision, recall]
-
-
-def symbols_docs_to_folders(folders):
-    for folder in folders:
-        for symbol in ['A', 'B', 'C']:
-            dst_folder = folder.replace('docs', 'symboled_docs') + symbol
-            os.makedirs(dst_folder, exist_ok=True)
-            for doc in tqdm(my_csv(symbol)):
-                add_str = ''
-                if folder == 'docs\\prefSufWord\\':
-                    add_str = 'prefsuf'
-                elif folder == 'docs\\rootWord\\':
-                    add_str = 'root'
-                doc_str = str(doc) + add_str + ".txt"
-                src = folder + doc_str
-                dst = dst_folder + "\\" + doc_str
-                if not os.path.exists(dst):
-                    shutil.copyfile(src, dst)
-        print()
 
 
 def print_results_table(title, k_means_res, ann_res):

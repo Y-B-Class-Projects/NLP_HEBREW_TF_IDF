@@ -11,7 +11,7 @@ import os
 
 def vectors_classification(x_vectors, y, title):
     k_means_res = kmeans(x_vectors, y, title)
-    ann_res = ann(x_vectors, y, title=title)
+    ann_res = ann(x_vectors, y)
     print_results_table(title, k_means_res, ann_res)
 
 
