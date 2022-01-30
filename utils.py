@@ -2,6 +2,8 @@ import os
 import shutil
 from collections import Counter
 from zipfile import ZipFile
+
+import matplotlib
 import pandas as pd
 from tqdm import tqdm
 import matplotlib.pyplot as plt
@@ -249,4 +251,4 @@ def print_results_table(title, k_means_res, ann_res):
     df = pd.DataFrame({'k-means': k_means_res, 'ANN': ann_res})
     df.index = ['Accuracy', 'F1', 'Precision', 'Recall']
     df.columns.name = title
-    dfi.export(df, 'plots\\' + title + '_table.jpeg', fontsize=22)
+    dfi.export(df, 'plots\\' + title + '_table.jpeg', fontsize=20, table_conversion=matplotlib)
